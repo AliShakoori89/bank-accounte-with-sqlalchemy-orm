@@ -16,14 +16,13 @@ class Customer(Base):
     firstname = Column(String)
     lastname = Column(String)
     bankaccount = Column(Integer)
-    supply = Column(Integer)
-
-    def __init__(self,id,firstname,lastname,bankaccount,supply):
-        self.id=id
-        self.firstname=firstname
-        self.lastname=lastname
-        self.bankaccount=bankaccount
-        self.supply=supply
+    supply = Column(Integer,nullable=False)
+    # def __init__(self,id,firstname,lastname,bankaccount,supply):
+    #     self.id=id
+    #     self.firstname=firstname
+    #     self.lastname=lastname
+    #     self.bankaccount=bankaccount
+    #     self.supply=supply
 
 
     def insert_table(self,data_list,id_field):
@@ -36,12 +35,7 @@ class Customer(Base):
                 return False
             
         Base.metadata.create_all(engine)
-        self.id=data_list[i]
-        self.firstname=data_list[i+1]
-        self.lastname=data_list[i+2]
-        self.bankaccount=data_list[i+3]
-        self.supply=data_list[i+4]
-        customer1=Customer(self.id,self.firstname, self.lastname,self.bankaccount, self.supply)
+        customer1=Customer(id=data_list[i],firstname=data_list[i+1],lastname=data_list[i+2],bankaccount=data_list[i+3],supply=data_list[i+4])
         session.add(customer1)
         session.commit()
         return True
@@ -57,7 +51,7 @@ class Customer(Base):
         l=list(intended_data)
         new_suply=l[0]+sheet
         customer=session.query(Customer).filter(id==id_search).first()
-        print(customer)
+        print(customer.fetchall())
 
 
         
