@@ -6,34 +6,34 @@ from functools import partial
 from tkinter.messagebox import showinfo
 
 
-class DepositForm(tk.Frame):
+# class DepositForm(tk.Frame):
     
-    def __init__(self, master, **kwargs):
-        self.master = master
-        tk.Frame.__init__(self, self.master, **kwargs)
-        deposit_window = tk.Toplevel(self.master)
-        self.sql_obj=Customer()
-        deposit_window.title("deposit box")
-        deposit_window.geometry("400x150")
-        Label(deposit_window, text="ID number for deposit: ").grid(row=0, column=0)
-        id_field = Entry(deposit_window, bg='light gray', width=30, bd=2, selectborderwidth=5)
-        id_field.grid(row=0, column=3)
-        Label(deposit_window, text="How many sheets: ").grid(row=1, column=0)
-        sheet_field = Entry(deposit_window, bg='light gray', width=30, bd=2, selectborderwidth=5)
-        sheet_field.grid(row=1, column=3)
-        account_deposit_action_with_arg = partial(self.deposit, id_field, sheet_field)
-        Button(deposit_window, text='Deposit', command=account_deposit_action_with_arg).place(x=10, y=60)
+#     def __init__(self, master, **kwargs):
+#         self.master = master
+#         tk.Frame.__init__(self, self.master, **kwargs)
+#         deposit_window = tk.Toplevel(self.master)
+#         self.sql_obj=Customer()
+#         deposit_window.title("deposit box")
+#         deposit_window.geometry("400x150")
+#         Label(deposit_window, text="ID number for deposit: ").grid(row=0, column=0)
+#         id_field = Entry(deposit_window, bg='light gray', width=30, bd=2, selectborderwidth=5)
+#         id_field.grid(row=0, column=3)
+#         Label(deposit_window, text="How many sheets: ").grid(row=1, column=0)
+#         sheet_field = Entry(deposit_window, bg='light gray', width=30, bd=2, selectborderwidth=5)
+#         sheet_field.grid(row=1, column=3)
+#         account_deposit_action_with_arg = partial(self.deposit, id_field, sheet_field)
+#         Button(deposit_window, text='Deposit', command=account_deposit_action_with_arg).place(x=10, y=60)
         
-    def deposit(self, id_field, sheet_field):
-        sheet=sheet_field.get()
-        sheet=int(sheet)
-        id_search=id_field.get()
-        if self.sql_obj.open_search(id_search):
-            intended_data=self.sql_obj.open_search(id_search)
-            self.sql_obj.add_sheets(intended_data,id_search,sheet)
-            showinfo("notification box", "successfully operation")
-        else:
-            showinfo("notification box", "failed operation because customer not found ")
+#     def deposit(self, id_field, sheet_field):
+#         sheet=sheet_field.get()
+#         sheet=int(sheet)
+#         id_search=id_field.get()
+#         if self.sql_obj.open_search(id_search):
+#             intended_data=self.sql_obj.open_search(id_search)
+#             self.sql_obj.add_sheets(intended_data,id_search,sheet)
+#             showinfo("notification box", "successfully operation")
+#         else:
+#             showinfo("notification box", "failed operation because customer not found ")
 
 # class DumpForm(tk.Frame):
 #     def __init__(self,master,**kwargs):
@@ -98,8 +98,8 @@ class DepositForm(tk.Frame):
 #         for i in range(0,n):
 #             Label(show_window,text=list_name[i]).grid()
 
-def create_deposit_window(args, master=None):
-    main_gui = DepositForm(master)
+# def create_deposit_window(args, master=None):
+#     main_gui = DepositForm(master)
 
 # def create_dump_window(args,master=None):
 #     main_gui = DumpForm(master)
@@ -150,8 +150,8 @@ class MainGUI:
         create_add_window_action_with_arg = partial(self.add_button, self.name_field, self.last_name_field, self.id_field,self.account_number_field,self.supply_field)
         Button(self.master, text='Add', command=create_add_window_action_with_arg).place(x=10, y=145)
 
-        create_deposit_window_action_with_arg = partial(create_deposit_window, self.master)
-        Button(self.master, text='Deposit', command=create_deposit_window_action_with_arg).place(x=45, y=145)
+        # create_deposit_window_action_with_arg = partial(create_deposit_window, self.master)
+        # Button(self.master, text='Deposit', command=create_deposit_window_action_with_arg).place(x=45, y=145)
         
         # create_dump_window_action_with_arg = partial(create_dump_window,self.master)
         # Button(self.master, text='Dump', command=create_dump_window_action_with_arg).place(x=98, y=145)
