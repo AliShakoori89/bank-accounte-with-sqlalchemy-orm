@@ -47,13 +47,13 @@ class Customer(Base):
         return True
         
     
-    def open_search(id_search):
+    def open_search(self,id_search):
         customers = session.query(Customer).all()
         for customer in customers:
             if id_search == customer.id:
                 return customer.id
     
-    def add_sheets(intended_data,id_search,sheet):
+    def add_sheets(self,intended_data,id_search,sheet):
         l=list(intended_data)
         new_suply=l[0]+sheet
         customer=session.query(Customer).filter(id==id_search).first()
