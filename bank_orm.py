@@ -16,7 +16,7 @@ class Customer(Base):
     bankaccount = Column(Integer)
     supply = Column(Integer)
 
-    def __init__(self, *args, **kwargs ):
+    def __init__(self, **kwargs ):
         self.engine = create_engine('sqlite:///bank.db', echo=True)
         DBSession = sessionmaker(bind=self.engine)
         self.session = DBSession()
