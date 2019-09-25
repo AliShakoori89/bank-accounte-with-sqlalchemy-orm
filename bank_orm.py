@@ -14,21 +14,21 @@ class Customer(Base):
     firstname = Column(String)
     lastname = Column(String)
     bankaccount = Column(Integer)
-    supply = Column(Integer,nullable=False)
-    def __init__(self,id,firstname,lastname,bankaccount,supply):
+    supply = Column(Integer)
 
+    def __init__(self, *args, **kwargs ):
         self.engine = create_engine('sqlite:///bank.db', echo=True)
         DBSession = sessionmaker(bind=self.engine)
         self.session = DBSession()
-
-    def insert_table(self,data_list,id_field):
-        i=0
+        
+    def insert_table(self,id_field,name_field,last_name_field,bank_account_field,supply_field):
+        # i=0
         Base.metadata.create_all(self.engine)
         customers = self.session.query(Customer).all()
         for customer in customers:
             if id_field == customer.id:
                 return False
-        customer1=Customer(id=data_list[i],firstname=data_list[i+1],lastname=data_list[i+2],bankaccount=data_list[i+3],supply=data_list[i+4])
+        customer1=Customer(self,id=id_field,firstname=name_field,lastname=last_name_field,bankaccount=bank_account_field,supply=supply_field)
         self.session.add(customer1)
         self.session.commit()
         return True
