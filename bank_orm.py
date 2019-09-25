@@ -21,6 +21,7 @@ class Customer(Base):
         DBSession = sessionmaker(bind=self.engine)
         self.session = DBSession()
         
+        
     def insert_table(self,id_field,name_field,last_name_field,bank_account_field,supply_field):
         # i=0
         Base.metadata.create_all(self.engine)
