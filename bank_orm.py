@@ -16,7 +16,7 @@ class Customer(Base):
     bankaccount = Column(Integer)
     supply = Column(Integer)
 
-    def __init__(self, **kwargs ):
+    def __init__(self, *args, **kwargs ):
         self.engine = create_engine('sqlite:///bank.db', echo=True)
         DBSession = sessionmaker(bind=self.engine)
         self.session = DBSession()
@@ -28,7 +28,7 @@ class Customer(Base):
         for customer in customers:
             if id_field == customer.id:
                 return False
-        customer1=Customer(self,id=id_field,firstname=name_field,lastname=last_name_field,bankaccount=bank_account_field,supply=supply_field)
+        customer1=Customer(id=id_field,firstname=name_field,lastname=last_name_field,bankaccount=bank_account_field,supply=supply_field)
         self.session.add(customer1)
         self.session.commit()
         return True

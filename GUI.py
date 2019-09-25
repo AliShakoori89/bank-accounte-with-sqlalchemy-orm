@@ -8,7 +8,7 @@ from tkinter.messagebox import showinfo
 
 class DepositForm(tk.Frame):
     
-    def __init__(self, master, **kwargs):
+    def __init__(self, master,**kwargs):
         self.master = master
         tk.Frame.__init__(self, self.master, **kwargs)
         deposit_window = tk.Toplevel(self.master)
@@ -36,11 +36,11 @@ class DepositForm(tk.Frame):
             showinfo("notification box", "failed operation because customer not found ")
 
 class DumpForm(tk.Frame):
-    def __init__(self,master, **kwargs):
+    def __init__(self,master,**kwargs):
         self.master=master
         tk.Frame.__init__(self,self.master,**kwargs)
         dump_window = tk.Toplevel(self.master)
-        self.sql_obj=Customer( **kwargs)
+        self.sql_obj=Customer(**kwargs)
         dump_window.title("dump box")
         dump_window.geometry("400x150")
         Label(dump_window,text="ID number for dump: ").grid(row=0, column=0)
@@ -66,11 +66,11 @@ class DumpForm(tk.Frame):
             showinfo("notification box", "failed operation because customer not found ")
 
 class WithdrawForm(tk.Frame):
-    def __init__(self,master, **kwargs):
+    def __init__(self,master,**kwargs):
         self.master=master
         tk.Frame.__init__(self,self.master,**kwargs)
         withdraw_window = tk.Toplevel(self.master)
-        self.sql_obj=Customer( **kwargs)
+        self.sql_obj=Customer(**kwargs)
         withdraw_window.title("dump box")
         withdraw_window.geometry("400x150")
         Label(withdraw_window,text="ID number for withdraw: ").grid(row=0, column=0)
@@ -109,7 +109,7 @@ def create_show_list(args,master=None):
     main_gui = ShowForm(master)
 
 class MainGUI:
-    def __init__(self,**kwargs):
+    def __init__(self, **kwargs):
         self.master = tk.Tk()
         self.master.geometry("400x200")
         self.master.title("Operation Box")
