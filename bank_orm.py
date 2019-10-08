@@ -6,7 +6,9 @@ from sqlalchemy import create_engine
 
 
 Base = declarative_base()
-
+engine = create_engine('sqlite:///bank.db', echo=True)
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 class Customer(Base):   
     __tablename__ ="customer"
@@ -16,26 +18,26 @@ class Customer(Base):
     bankaccount = Column(Integer)
     supply = Column(Integer)
 
-    def __init__(self,**kwargs ):
-        self.engine = create_engine('sqlite:///bank.db', echo=True)
-        DBSession = sessionmaker(bind=self.engine)
-        self.session = DBSession()
+    # def __init__(self,**kwargs ):
+    #     engine = create_engine('sqlite:///bank.db', echo=True)
+    #     DBSession = sessionmaker(bind=engine)
+    #     session = DBSession()
         
         
     def insert_table(self,id_field,name_field,last_name_field,bank_account_field,supply_field):
         # i=0
-        Base.metadata.create_all(self.engine)
-        customers = self.session.query(Customer).all()
+        Base.metadata.create_all(engine)
+        customers = session.query(Customer).all()
         for customer in customers:
             if id_field == customer.id:
                 return False
         customer1=Customer(id=id_field,firstname=name_field,lastname=last_name_field,bankaccount=bank_account_field,supply=supply_field)
-        self.session.add(customer1)
-        self.session.commit()
+        session.add(customer1)
+        session.commit()
         return True
         
     def open_search(self,id_search):
-        intended_supply = self.session.query(Customer.supply).filter(Customer.id == id_search)
+        intended_supply = session.query(Customer.supply).filter(Customer.id == id_search)
         for row in intended_supply: 
             if row != 0:
                 return intended_supply
@@ -46,23 +48,23 @@ class Customer(Base):
         for row in intended_data:
             select_row=list(row)
             sheet+=select_row[0]
-            self.session.query(Customer).filter(Customer.id == id_search).update({Customer.supply: sheet})
-            self.session.commit()
+            session.query(Customer).filter(Customer.id == id_search).update({Customer.supply: sheet})
+            session.commit()
 
     def sub_sheets(self,intended_data,id_search,sheet):
         for row in intended_data:
             select_row=list(row)
             select_row[0]-=sheet
             if select_row[0]>0 :
-                self.session.query(Customer).filter(Customer.id == id_search).update({Customer.supply: select_row[0]})
-                self.session.commit()
+                session.query(Customer).filter(Customer.id == id_search).update({Customer.supply: select_row[0]})
+                session.commit()
                 return True
             else:
                 return False
 
     def withdraw(self,id_search):
-        if self.session.query(Customer).filter(Customer.id == id_search).delete():
-            self.session.commit()
+        if session.query(Customer).filter(Customer.id == id_search).delete():
+            session.commit()
             return True
         else:
             return False
@@ -70,7 +72,7 @@ class Customer(Base):
     def show(self):
         list_user=[]
         all_list_user=[]
-        data=self.session.query(Customer).all()
+        data=session.query(Customer).all()
 
         for row in data:
             list_user.append(row.id)
